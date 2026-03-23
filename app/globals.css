@@ -1146,6 +1146,10 @@ video {
     padding: 0 20px;
   }
 
+  .load-more {
+    padding-top: 24px;
+  }
+
   .site-nav {
     gap: 16px;
   }
