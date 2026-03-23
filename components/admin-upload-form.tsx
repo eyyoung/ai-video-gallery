@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useTransition } from "react";
 import type { ChangeEvent } from "react";
@@ -163,10 +162,9 @@ export function AdminUploadForm({ existingVideos }: { existingVideos: VideoEntry
               <video src={previewUrl} controls muted playsInline className="preview-panel__video" />
             ) : (
               <>
-                <Image
-                  fill
-                  sizes="(max-width: 1180px) 100vw, 33vw"
-                  src="/stitch/admin.png"
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/placeholder/admin.svg"
                   alt=""
                   className="preview-panel__placeholder"
                 />

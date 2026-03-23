@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { AdminUploadForm } from "@/components/admin-upload-form";
+import { AdminVideoEditor } from "@/components/admin-video-editor";
 import { AmbientBackdrop, SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { isAuthenticated } from "@/lib/auth";
 import { readVideos } from "@/lib/video-store";
@@ -33,6 +34,13 @@ export default async function AdminPage() {
         </section>
         <section className="shell">
           <AdminUploadForm existingVideos={videos} />
+        </section>
+        <section className="shell admin-editor-section">
+          <div className="admin-editor-section__header">
+            <h2>作品管理</h2>
+            <p>编辑视频元数据，修改将直接写入 <code>content/videos.json</code></p>
+          </div>
+          <AdminVideoEditor videos={videos} />
         </section>
       </main>
       <SiteFooter />

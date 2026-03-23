@@ -11,14 +11,14 @@ const uploadDirectory = path.join(process.cwd(), "public", "uploads");
 const EMPTY_STORE = JSON.stringify({ videos: [] }, null, 2);
 
 const posterByCategory: Record<string, { poster: string; accent: string; position?: string }> = {
-  品牌形象: { poster: "/stitch/home.png", accent: "#b6a0ff", position: "center center" },
-  产品展示: { poster: "/stitch/detail.png", accent: "#00e3fd", position: "center top" },
-  汽车出行: { poster: "/stitch/admin.png", accent: "#ff6c95", position: "left center" },
-  美妆护肤: { poster: "/stitch/login.png", accent: "#ffb86c", position: "center top" },
-  食品饮料: { poster: "/stitch/detail.png", accent: "#7bd88f", position: "center top" },
-  科技数码: { poster: "/stitch/admin.png", accent: "#00e3fd", position: "right center" },
-  服饰时尚: { poster: "/stitch/home.png", accent: "#ff6c95", position: "left top" },
-  地产家居: { poster: "/stitch/detail.png", accent: "#b6a0ff", position: "center center" },
+  品牌形象: { poster: "/placeholder/home.svg", accent: "#b6a0ff", position: "center center" },
+  产品展示: { poster: "/placeholder/detail.svg", accent: "#00e3fd", position: "center top" },
+  汽车出行: { poster: "/placeholder/admin.svg", accent: "#ff6c95", position: "center center" },
+  美妆护肤: { poster: "/placeholder/login.svg", accent: "#ffb86c", position: "center center" },
+  食品饮料: { poster: "/placeholder/detail.svg", accent: "#7bd88f", position: "center center" },
+  科技数码: { poster: "/placeholder/admin.svg", accent: "#00e3fd", position: "center center" },
+  服饰时尚: { poster: "/placeholder/home.svg", accent: "#ff6c95", position: "center center" },
+  地产家居: { poster: "/placeholder/detail.svg", accent: "#b6a0ff", position: "center center" },
 };
 
 async function ensureStorage() {
@@ -124,9 +124,38 @@ export async function createVideoEntry(input: CreateVideoInput) {
   return entry;
 }
 
+export async function updateVideoEntry(
+  id: string,
+  patch: Partial<Omit<VideoEntry, "id">>
+) {
+  await ensureStorage();
+  const file = await readFile(contentFile, "utf8");
+  const payload = JSON.parse(file) as { videos: VideoEntry[] };
+  const index = payload.videos.findIndex((v) => v.id === id);
+
+  if (index === -1) return null;
+
+  payload.videos[index] = { ...payload.videos[index], ...patch, id };
+  await writeFile(contentFile, JSON.stringify({ videos: payload.videos }, null, 2));
+  return payload.videos[index];
+}
+
+export async function deleteVideoEntry(id: string) {
+  await ensureStorage();
+  const file = await readFile(contentFile, "utf8");
+  const payload = JSON.parse(file) as { videos: VideoEntry[] };
+  const before = payload.videos.length;
+  payload.videos = payload.videos.filter((v) => v.id !== id);
+
+  if (payload.videos.length === before) return false;
+
+  await writeFile(contentFile, JSON.stringify({ videos: payload.videos }, null, 2));
+  return true;
+}
+
 /**
  * Regenerate thumbnails for all videos that have a videoSrc but are still using
- * a placeholder poster (i.e. a /stitch/* path).
+ * a placeholder poster (i.e. a /placeholder/* path).
  */
 export async function regenerateThumbnails(): Promise<number> {
   const videos = await readVideos();
@@ -137,7 +166,7 @@ export async function regenerateThumbnails(): Promise<number> {
 
     const needsThumb =
       !video.poster ||
-      video.poster.startsWith("/stitch/");
+      video.poster.startsWith("/placeholder/");
 
     if (!needsThumb) continue;
 
