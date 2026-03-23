@@ -190,10 +190,10 @@ export function GalleryHome({ videos }: { videos: VideoEntry[] }) {
         <section className="shell hero">
           <div className="hero__copy">
             <h1>
-              影像 <span>作品集</span>
+              AIGC <span>商业影像</span>
             </h1>
             <p>
-              精选高保真视觉叙事作品，现已接入创作者工作流，支持将本地视频直接发布至画廊。
+              以精品化创作方法打磨品牌视觉、产品叙事与概念短片，为高要求项目提供更具辨识度的影像表达。
             </p>
           </div>
         </section>
