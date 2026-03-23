@@ -2,10 +2,54 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { startTransition, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import type { VideoEntry } from "@/lib/types";
 import { AmbientBackdrop, SiteFooter, SiteHeader } from "@/components/site-chrome";
+
+function useVideoHover() {
+  const ref = useRef<HTMLAnchorElement>(null);
+  return {
+    ref,
+    onMouseEnter() {
+      ref.current?.querySelector("video")?.play().catch(() => {});
+    },
+    onMouseLeave() {
+      const v = ref.current?.querySelector("video");
+      if (v) {
+        v.pause();
+        v.currentTime = 0;
+      }
+    }
+  };
+}
+
+function useScrollReveal(threshold = 0.25) {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return { ref, visible };
+}
 
 function VideoSurface({ video }: { video: VideoEntry }) {
   const style = {
@@ -42,9 +86,17 @@ function VideoSurface({ video }: { video: VideoEntry }) {
   );
 }
 
-function FeatureCard({ video }: { video: VideoEntry }) {
+function FeatureCard({ video, index }: { video: VideoEntry; index: number }) {
+  const { ref, onMouseEnter, onMouseLeave } = useVideoHover();
   return (
-    <Link href={`/video/${video.slug}`} className="card card--feature">
+    <Link
+      ref={ref}
+      href={`/video/${video.slug}`}
+      className="card card--feature"
+      style={{ "--stagger": index } as CSSProperties}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <VideoSurface video={video} />
       <div className="card__overlay" />
       <div className="card__meta">
@@ -59,9 +111,17 @@ function FeatureCard({ video }: { video: VideoEntry }) {
   );
 }
 
-function StandardCard({ video }: { video: VideoEntry }) {
+function StandardCard({ video, index }: { video: VideoEntry; index: number }) {
+  const { ref, onMouseEnter, onMouseLeave } = useVideoHover();
   return (
-    <Link href={`/video/${video.slug}`} className="card card--standard">
+    <Link
+      ref={ref}
+      href={`/video/${video.slug}`}
+      className="card card--standard"
+      style={{ "--stagger": index } as CSSProperties}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <VideoSurface video={video} />
       <div className="card__body">
         <div className="card__row">
@@ -76,9 +136,17 @@ function StandardCard({ video }: { video: VideoEntry }) {
   );
 }
 
-function CompactCard({ video }: { video: VideoEntry }) {
+function CompactCard({ video, index }: { video: VideoEntry; index: number }) {
+  const { ref, onMouseEnter, onMouseLeave } = useVideoHover();
   return (
-    <Link href={`/video/${video.slug}`} className="card card--compact">
+    <Link
+      ref={ref}
+      href={`/video/${video.slug}`}
+      className="card card--compact"
+      style={{ "--stagger": index } as CSSProperties}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <VideoSurface video={video} />
       <div className="card__compact-copy">
         <h4>{video.shortTitle}</h4>
@@ -99,20 +167,20 @@ export function GalleryHome({ videos }: { videos: VideoEntry[] }) {
   const filters = Array.from(names).slice(0, 6);
 
   const [activeFilter, setActiveFilter] = useState("全部作品");
-  const [visibleCount, setVisibleCount] = useState(6);
   const filteredVideos =
     activeFilter === "全部作品"
       ? videos
       : videos.filter(
           (video) => video.category === activeFilter || video.tags.includes(activeFilter)
         );
-  const visibleVideos = filteredVideos.slice(0, visibleCount);
-  const [feature, ...rest] = visibleVideos;
+  const [feature, ...rest] = filteredVideos;
   const stats = [
     { value: `${videos.length}`, label: "精选影片" },
     { value: "4", label: "展示形态" },
     { value: "24/7", label: "发布通道" }
   ];
+
+  const { ref: statsRef, visible: statsVisible } = useScrollReveal(0.3);
 
   return (
     <>
@@ -131,50 +199,40 @@ export function GalleryHome({ videos }: { videos: VideoEntry[] }) {
         </section>
 
         <section className="shell filter-bar" aria-label="作品筛选">
-          {filters.map((filter) => (
+          {filters.map((filter, i) => (
             <button
               key={filter}
               type="button"
               className={filter === activeFilter ? "filter-pill is-active" : "filter-pill"}
-              onClick={() =>
-                startTransition(() => {
-                  setActiveFilter(filter);
-                  setVisibleCount(6);
-                })
-              }
+              style={{ "--stagger": i } as CSSProperties}
+              onClick={() => startTransition(() => setActiveFilter(filter))}
             >
               {filter}
             </button>
           ))}
         </section>
 
-        <section className="shell gallery-grid">
-          {feature ? <FeatureCard video={feature} /> : null}
-          {rest.slice(0, 2).map((video) => (
-            <StandardCard key={video.id} video={video} />
+        <section className="shell gallery-grid" key={activeFilter}>
+          {feature ? <FeatureCard video={feature} index={0} /> : null}
+          {rest.slice(0, 2).map((video, i) => (
+            <StandardCard key={video.id} video={video} index={i + 1} />
           ))}
-          {rest.slice(2).map((video) => (
-            <CompactCard key={video.id} video={video} />
+          {rest.slice(2).map((video, i) => (
+            <CompactCard key={video.id} video={video} index={i + 3} />
           ))}
         </section>
 
-        {visibleCount < filteredVideos.length ? (
-          <section className="shell load-more">
-            <button
-              type="button"
-              className="load-more__button"
-              onClick={() => startTransition(() => setVisibleCount((count) => count + 3))}
-            >
-              <span>加载更多</span>
-              <span>↓</span>
-            </button>
-          </section>
-        ) : null}
-
-        <section className="stats-band">
+        <section
+          className={`stats-band${statsVisible ? " is-revealed" : ""}`}
+          ref={statsRef as React.RefObject<HTMLElement>}
+        >
           <div className="shell stats-band__grid">
-            {stats.map((stat) => (
-              <div key={stat.label} className="stats-band__item">
+            {stats.map((stat, i) => (
+              <div
+                key={stat.label}
+                className="stats-band__item"
+                style={{ "--stagger": i } as CSSProperties}
+              >
                 <strong>{stat.value}</strong>
                 <span>{stat.label}</span>
               </div>
