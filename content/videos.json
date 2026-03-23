@@ -1,6 +1,82 @@
 {
   "videos": [
     {
+      "id": "a478d0f5-80b4-457d-82a0-dd726d6d8354",
+      "slug": "aape-clothing",
+      "title": "AAPE - Clothing",
+      "shortTitle": "AAPE - Clothing",
+      "description": "刚刚上传的画廊作品，等待审核与发布。",
+      "summary": "从创作者工作台新部署的作品。",
+      "category": "服饰时尚",
+      "tags": [
+        "服饰时尚"
+      ],
+      "duration": "新上传",
+      "year": "2026",
+      "accent": "#ff6c95",
+      "poster": "/uploads/thumb-1774296272755-aape-clothing.jpg",
+      "posterPosition": "center center",
+      "featured": false,
+      "videoSrc": "/uploads/1774296272755-aape-clothing.mp4",
+      "createdAt": "2026-03-23T20:04:32.945Z",
+      "creator": {
+        "name": "光言科技",
+        "role": "AIGC 创意制作"
+      },
+      "stats": [
+        {
+          "label": "制作方",
+          "value": "光言科技"
+        },
+        {
+          "label": "类型",
+          "value": "AIGC 广告"
+        },
+        {
+          "label": "状态",
+          "value": "已发布"
+        }
+      ]
+    },
+    {
+      "id": "d8316fab-3514-425e-bd8d-6d88869df0d7",
+      "slug": "anta-kai-yin",
+      "title": "Anta - Kai Yin",
+      "shortTitle": "Anta - Kai Yin",
+      "description": "刚刚上传的画廊作品，等待审核与发布。",
+      "summary": "从创作者工作台新部署的作品。",
+      "category": "服饰时尚",
+      "tags": [
+        "服饰时尚"
+      ],
+      "duration": "新上传",
+      "year": "2026",
+      "accent": "#ff6c95",
+      "poster": "/uploads/thumb-1774296235144-anta-kai-yin.jpg",
+      "posterPosition": "center center",
+      "featured": false,
+      "videoSrc": "/uploads/1774296235144-anta-kai-yin.mp4",
+      "createdAt": "2026-03-23T20:03:55.413Z",
+      "creator": {
+        "name": "光言科技",
+        "role": "AIGC 创意制作"
+      },
+      "stats": [
+        {
+          "label": "制作方",
+          "value": "光言科技"
+        },
+        {
+          "label": "类型",
+          "value": "AIGC 广告"
+        },
+        {
+          "label": "状态",
+          "value": "已发布"
+        }
+      ]
+    },
+    {
       "id": "b4edc90b-d131-49cf-a0d9-b0d57a0cb72b",
       "slug": "anta-kyrie-mp4",
       "title": "Anta - Kyrie.mp4",

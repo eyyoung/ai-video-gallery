@@ -553,8 +553,9 @@ video {
 }
 
 .player-shell__video {
+  width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
+  object-fit: contain;
   background: #050607;
 }
 
@@ -1145,6 +1146,23 @@ video {
 
   .site-nav {
     gap: 16px;
+  }
+
+  .filter-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-top: 16px;
+    padding-bottom: 28px;
+  }
+
+  .filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-pill {
+    flex-shrink: 0;
   }
 
   .card__meta {

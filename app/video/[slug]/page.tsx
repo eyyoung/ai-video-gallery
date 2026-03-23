@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AmbientBackdrop, SiteFooter, SiteHeader } from "@/components/site-chrome";
+import { VideoPlayer } from "@/components/video-player";
 import { getVideoBySlug, readVideos } from "@/lib/video-store";
 
 export const dynamic = "force-dynamic";
@@ -36,13 +37,7 @@ export default async function VideoDetailPage({
             <section className="detail-main">
               <div className="player-shell">
                 {video.videoSrc ? (
-                  <video
-                    className="player-shell__video"
-                    src={video.videoSrc}
-                    controls
-                    playsInline
-                    poster={video.poster}
-                  />
+                  <VideoPlayer src={video.videoSrc} poster={video.poster} />
                 ) : (
                   <Image
                     fill

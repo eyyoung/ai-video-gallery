@@ -128,10 +128,6 @@ export function GalleryHome({ videos }: { videos: VideoEntry[] }) {
               精选高保真视觉叙事作品，现已接入创作者工作流，支持将本地视频直接发布至画廊。
             </p>
           </div>
-          <div className="hero__focus">
-            <span className="eyebrow eyebrow--cyan">当前焦点</span>
-            <strong>视觉叙事 2026</strong>
-          </div>
         </section>
 
         <section className="shell filter-bar" aria-label="作品筛选">
