@@ -94,7 +94,7 @@ export default async function VideoDetailPage({
                       />
                     </div>
                     <div>
-                      <strong>{entry.shortTitle}</strong>
+                      <strong style={{ marginRight: "16px" }}>{entry.shortTitle}</strong>
                       <span>
                         {entry.category} · {entry.duration}
                       </span>

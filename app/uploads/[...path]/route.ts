@@ -74,7 +74,7 @@ export async function GET(
         "Content-Length": String(chunkSize),
         "Content-Range": `bytes ${start}-${end}/${size}`,
         "Accept-Ranges": "bytes",
-        "Cache-Control": "public, max-age=31536000, immutable",
+        "Cache-Control": "public, max-age=86400",
       },
     });
   }
@@ -88,7 +88,7 @@ export async function GET(
       "Content-Type": contentType,
       "Content-Length": String(size),
       "Accept-Ranges": "bytes",
-      "Cache-Control": "public, max-age=31536000, immutable",
+      "Cache-Control": "public, max-age=86400",
     },
   });
 }
