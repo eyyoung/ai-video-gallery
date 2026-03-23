@@ -55,7 +55,7 @@ export function VideoPlayer({ src, poster }: VideoPlayerProps) {
 
         const reader = response.body.getReader();
         const totalBytes = Number(response.headers.get("content-length")) || 0;
-        const chunks: Uint8Array[] = [];
+        const chunks: BlobPart[] = [];
         let receivedBytes = 0;
 
         while (true) {
@@ -64,7 +64,9 @@ export function VideoPlayer({ src, poster }: VideoPlayerProps) {
           if (done) break;
           if (!value) continue;
 
-          chunks.push(value);
+          const chunk = new Uint8Array(value.byteLength);
+          chunk.set(value);
+          chunks.push(chunk);
           receivedBytes += value.byteLength;
 
           if (totalBytes > 0) {
