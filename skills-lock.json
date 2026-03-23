@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "skills": {
+    "animate": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "computedHash": "3ef78de08d30c9d0512d8841b5c629cf7583e8220ffe5c84178e0754606f9468"
+    },
+    "frontend-design": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "computedHash": "f8ecd3028ae60e1b710a9e1c13a43ddfb3a9d4bf67df99209a1855297c1ea2bd"
+    },
+    "polish": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "computedHash": "ff757399bae6ac3a3de92ad34deec6ac18bc778633320522bf09031df6a6a8b7"
+    },
+    "teach-impeccable": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "computedHash": "b3b5541bb9b0a260af793c7d79c2db4a436c2cd9384be34a4024c7f28af72e62"
+    }
+  }
+}
