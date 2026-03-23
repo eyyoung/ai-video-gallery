@@ -38,7 +38,10 @@ export default async function AdminPage() {
         <section className="shell admin-editor-section">
           <div className="admin-editor-section__header">
             <h2>作品管理</h2>
-            <p>编辑视频元数据，修改将直接写入 <code>content/videos.json</code></p>
+            <p>
+              编辑视频元数据；列表左侧 ↑↓ 可调整展示顺序，修改将直接写入{" "}
+              <code>content/videos.json</code>
+            </p>
           </div>
           <AdminVideoEditor videos={videos} />
         </section>

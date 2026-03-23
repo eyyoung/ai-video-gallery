@@ -140,6 +140,35 @@ export function AdminVideoEditor({ videos }: { videos: VideoEntry[] }) {
     });
   }
 
+  function moveVideo(index: number, delta: -1 | 1) {
+    const next = index + delta;
+    if (next < 0 || next >= videos.length) return;
+
+    const orderedIds = videos.map((v) => v.id);
+    const [removed] = orderedIds.splice(index, 1);
+    orderedIds.splice(next, 0, removed);
+
+    startTransition(async () => {
+      setError("");
+      const res = await fetch("/api/videos/reorder", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderedIds }),
+      });
+
+      if (!res.ok) {
+        const payload = (await res.json().catch(() => null)) as {
+          error?: string;
+        } | null;
+        setError(payload?.error || "调整顺序失败，请重试。");
+        return;
+      }
+
+      setError("");
+      router.refresh();
+    });
+  }
+
   if (videos.length === 0) {
     return (
       <div className="panel panel--padded editor-empty">
@@ -150,26 +179,59 @@ export function AdminVideoEditor({ videos }: { videos: VideoEntry[] }) {
 
   return (
     <div className="video-editor">
+      {error ? (
+        <p className="form-error video-editor__global-error" role="alert">
+          {error}
+        </p>
+      ) : null}
+
       <div className="video-editor__list">
-        {videos.map((video) => (
-          <button
-            key={video.id}
-            type="button"
-            className={`video-editor__item ${editingId === video.id ? "is-active" : ""}`}
-            onClick={() => openEditor(video)}
-          >
-            <div className="video-editor__thumb">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={video.poster} alt="" />
+        {videos.map((video, index) => (
+          <div key={video.id} className="video-editor__row">
+            <div className="video-editor__reorder">
+              <button
+                type="button"
+                className="video-editor__reorder-btn"
+                aria-label="上移"
+                disabled={isPending || index === 0}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  moveVideo(index, -1);
+                }}
+              >
+                ↑
+              </button>
+              <button
+                type="button"
+                className="video-editor__reorder-btn"
+                aria-label="下移"
+                disabled={isPending || index === videos.length - 1}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  moveVideo(index, 1);
+                }}
+              >
+                ↓
+              </button>
             </div>
-            <div className="video-editor__info">
-              <strong>{video.title}</strong>
-              <span>
-                {video.category} · {video.year}
-              </span>
-            </div>
-            {video.featured && <span className="tag-chip">精选</span>}
-          </button>
+            <button
+              type="button"
+              className={`video-editor__item ${editingId === video.id ? "is-active" : ""}`}
+              onClick={() => openEditor(video)}
+            >
+              <div className="video-editor__thumb">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={video.poster} alt="" />
+              </div>
+              <div className="video-editor__info">
+                <strong>{video.title}</strong>
+                <span>
+                  {video.category} · {video.year}
+                </span>
+              </div>
+              {video.featured && <span className="tag-chip">精选</span>}
+            </button>
+          </div>
         ))}
       </div>
 
@@ -320,7 +382,6 @@ export function AdminVideoEditor({ videos }: { videos: VideoEntry[] }) {
               <span className="field__label">精选作品</span>
             </label>
 
-            {error && <p className="form-error">{error}</p>}
             {success && <p className="editor-success">{success}</p>}
 
             <div className="editor-actions">

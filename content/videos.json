@@ -39,24 +39,24 @@
       ]
     },
     {
-      "id": "d8316fab-3514-425e-bd8d-6d88869df0d7",
-      "slug": "anta-kai-yin",
-      "title": "Anta - Kai Yin",
-      "shortTitle": "Anta - Kai Yin",
+      "id": "b4edc90b-d131-49cf-a0d9-b0d57a0cb72b",
+      "slug": "anta-kyrie-mp4",
+      "title": "Anta - Kyrie.mp4",
+      "shortTitle": "Anta - Kyrie.mp4",
       "description": "刚刚上传的画廊作品，等待审核与发布。",
       "summary": "从创作者工作台新部署的作品。",
-      "category": "服饰时尚",
+      "category": "品牌形象",
       "tags": [
-        "服饰时尚"
+        "品牌形象"
       ],
       "duration": "新上传",
       "year": "2026",
-      "accent": "#ff6c95",
-      "poster": "/uploads/thumb-1774296235144-anta-kai-yin.jpg",
+      "accent": "#b6a0ff",
+      "poster": "/uploads/thumb-1774291804765-anta-kyrie-mp4.jpg",
       "posterPosition": "center center",
       "featured": false,
-      "videoSrc": "/uploads/1774296235144-anta-kai-yin.mp4",
-      "createdAt": "2026-03-23T20:03:55.413Z",
+      "videoSrc": "/uploads/1774291804765-anta-kyrie-mp4.mp4",
+      "createdAt": "2026-03-23T18:50:04.790Z",
       "creator": {
         "name": "光言科技",
         "role": "AIGC 创意制作"
@@ -77,24 +77,24 @@
       ]
     },
     {
-      "id": "b4edc90b-d131-49cf-a0d9-b0d57a0cb72b",
-      "slug": "anta-kyrie-mp4",
-      "title": "Anta - Kyrie.mp4",
-      "shortTitle": "Anta - Kyrie.mp4",
+      "id": "d8316fab-3514-425e-bd8d-6d88869df0d7",
+      "slug": "anta-kai-yin",
+      "title": "Anta - Kai Yin",
+      "shortTitle": "Anta - Kai Yin",
       "description": "刚刚上传的画廊作品，等待审核与发布。",
       "summary": "从创作者工作台新部署的作品。",
-      "category": "品牌形象",
+      "category": "服饰时尚",
       "tags": [
-        "品牌形象"
+        "服饰时尚"
       ],
       "duration": "新上传",
       "year": "2026",
-      "accent": "#b6a0ff",
-      "poster": "/uploads/thumb-1774291804765-anta-kyrie-mp4.jpg",
+      "accent": "#ff6c95",
+      "poster": "/uploads/thumb-1774296235144-anta-kai-yin.jpg",
       "posterPosition": "center center",
       "featured": false,
-      "videoSrc": "/uploads/1774291804765-anta-kyrie-mp4.mp4",
-      "createdAt": "2026-03-23T18:50:04.790Z",
+      "videoSrc": "/uploads/1774296235144-anta-kai-yin.mp4",
+      "createdAt": "2026-03-23T20:03:55.413Z",
       "creator": {
         "name": "光言科技",
         "role": "AIGC 创意制作"

@@ -33,25 +33,34 @@ async function ensureStorage() {
   }
 }
 
-function sortVideos(videos: VideoEntry[]) {
-  return [...videos].sort((left, right) => {
-    if (left.featured && !right.featured) {
-      return -1;
-    }
-
-    if (!left.featured && right.featured) {
-      return 1;
-    }
-
-    return new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime();
-  });
-}
-
 export async function readVideos() {
   await ensureStorage();
   const file = await readFile(contentFile, "utf8");
   const payload = JSON.parse(file) as { videos: VideoEntry[] };
-  return sortVideos(payload.videos);
+  return payload.videos;
+}
+
+export async function reorderVideos(orderedIds: string[]): Promise<boolean> {
+  await ensureStorage();
+  const file = await readFile(contentFile, "utf8");
+  const payload = JSON.parse(file) as { videos: VideoEntry[] };
+  const byId = new Map(payload.videos.map((v) => [v.id, v]));
+
+  if (orderedIds.length !== payload.videos.length) {
+    return false;
+  }
+
+  const seen = new Set<string>();
+  for (const id of orderedIds) {
+    if (!byId.has(id) || seen.has(id)) {
+      return false;
+    }
+    seen.add(id);
+  }
+
+  payload.videos = orderedIds.map((id) => byId.get(id)!);
+  await writeFile(contentFile, JSON.stringify({ videos: payload.videos }, null, 2));
+  return true;
 }
 
 export async function getVideoBySlug(slug: string) {
