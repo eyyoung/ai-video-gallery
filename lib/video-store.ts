@@ -19,6 +19,7 @@ const posterByCategory: Record<string, { poster: string; accent: string; positio
   科技数码: { poster: "/placeholder/admin.svg", accent: "#00e3fd", position: "center center" },
   服饰时尚: { poster: "/placeholder/home.svg", accent: "#ff6c95", position: "center center" },
   地产家居: { poster: "/placeholder/detail.svg", accent: "#b6a0ff", position: "center center" },
+  视觉艺术: { poster: "/placeholder/home.svg", accent: "#00e3fd", position: "center center" },
 };
 
 async function ensureStorage() {
