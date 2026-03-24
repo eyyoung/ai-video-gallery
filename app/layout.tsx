@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 const siteTitle = "光言科技";
-const siteDescription = "高品质 AIGC 视频作品集，支持本地上传与发布。";
+const siteDescription = "以精品化创作方法打磨品牌视觉、产品叙事与概念短片，为高要求项目提供更具辨识度的影像表达。";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
